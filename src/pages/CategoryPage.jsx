@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { StoreContext } from '../store/StoreContext'
 import ProductCard from '../components/ProductCard/ProductCard'
+import Banner from '../components/banner/Banner'
 
 export default function CategoryPage() {
   const { categoryTitle } = useParams()
@@ -25,10 +26,13 @@ export default function CategoryPage() {
   }
 
   return (
-    <div className='container mx-auto grid grid-cols-5 gap-12'>
-      {products.map((product) => {
-        return <ProductCard product={product} />
-      })}
-    </div>
+    <>
+      <Banner />
+      <div className='container mx-auto grid grid-cols-5 gap-12'>
+        {products.map((product) => {
+          return <ProductCard product={product} />
+        })}
+      </div>
+    </>
   )
 }

@@ -1,12 +1,17 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Pagination, Navigation, Autoplay } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 import 'swiper/css/autoplay'
+import { StoreContext } from '../../store/StoreContext'
+import { useParams } from 'react-router-dom'
 
 export default function Banner() {
+  const { products } = useContext(StoreContext)
+  const { categoryTitle } = useParams()
+
   return (
     <div className='container mx-auto h-96 bg-stone-200 my-10 rounded-lg overflow-hidden'>
       <Swiper
@@ -21,27 +26,17 @@ export default function Banner() {
         modules={[Pagination, Navigation, Autoplay]}
         className='w-full h-full'
       >
-        <SwiperSlide>
-          <img
-            className='w-full h-full object-cover object-center'
-            src='https://img.freepik.com/premium-psd/black-friday-sale-laptops-gadgets-banner-template-3d-render_444361-44.jpg'
-            alt=''
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            className='w-full h-full object-cover object-center'
-            src='https://img.freepik.com/premium-vector/realistic-cyber-monday-banner-template_252779-566.jpg'
-            alt=''
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            className='w-full h-full object-cover object-center'
-            src='https://img.freepik.com/premium-psd/gaming-laptop-sale-promotion-banner_252779-743.jpg'
-            alt=''
-          />
-        </SwiperSlide>
+        {products.slice(0, 3).map((product) => {
+          return (
+            <SwiperSlide className='px-10 flex items-center gap-10'>
+              <img className='h-full' src={product.image} alt='' />
+              <div>
+                <h2 className='text-4xl font-bold'>{product.title}</h2>
+                <p className='text-2xl my-4'>{product.description}</p>
+              </div>
+            </SwiperSlide>
+          )
+        })}
       </Swiper>
     </div>
   )
